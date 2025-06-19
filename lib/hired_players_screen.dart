@@ -108,7 +108,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     game: order['game'] ?? '',
                                     hours: order['hours'] ?? 0,
                                     totalCoin: order['totalCoin'] ?? 0,
-                                    orderId: order['orderId'].toString(),
+                                    orderId: order['id'].toString(),
                                     startTime: order['startTime']?.toString() ?? '',
                                   ),
                                 ),

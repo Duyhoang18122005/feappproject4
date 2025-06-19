@@ -114,8 +114,9 @@ class _HirePlayerScreenState extends State<HirePlayerScreen> {
         );
         Navigator.pop(context);
       } else {
+        final errorMsg = result?['message'] ?? 'Thuê player thất bại!';
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(result?['message'] ?? 'Thuê player thất bại!')),
+          SnackBar(content: Text(errorMsg)),
         );
       }
     } catch (e) {
