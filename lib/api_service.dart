@@ -796,4 +796,43 @@ class ApiService {
     }
     return null;
   }
+
+  static Future<bool> confirmHire(String paymentId) async {
+    final token = await storage.read(key: 'jwt');
+    final url = Uri.parse('${ApiConfig.baseUrl}/api/game-players/hire/$paymentId/confirm');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+    ).timeout(timeout);
+    return response.statusCode == 200;
+  }
+
+  static Future<bool> rejectHire(String paymentId) async {
+    final token = await storage.read(key: 'jwt');
+    final url = Uri.parse('${ApiConfig.baseUrl}/api/game-players/hire/$paymentId/reject');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+    ).timeout(timeout);
+    return response.statusCode == 200;
+  }
+
+  static Future<bool> deleteNotification(int notificationId) async {
+    final token = await storage.read(key: 'jwt');
+    final url = Uri.parse('${ApiConfig.baseUrl}/api/notifications/$notificationId');
+    final response = await http.delete(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+    ).timeout(timeout);
+    return response.statusCode == 200;
+  }
 }

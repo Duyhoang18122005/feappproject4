@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'api_service.dart';
 
 class HireConfirmationScreen extends StatelessWidget {
   final String playerName;
@@ -288,8 +289,18 @@ class HireConfirmationScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
+                    onPressed: () async {
+                      final success = await ApiService.rejectHire(orderId);
+                      if (success) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Đã từ chối đơn thành công!')),
+                        );
+                        Navigator.pop(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Từ chối đơn thất bại!')),
+                        );
+                      }
                     },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.red,
@@ -302,8 +313,18 @@ class HireConfirmationScreen extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {
-                      // TODO: Xử lý xác nhận đơn
+                    onPressed: () async {
+                      final success = await ApiService.confirmHire(orderId);
+                      if (success) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Đã xác nhận đơn thành công!')),
+                        );
+                        Navigator.pop(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Xác nhận đơn thất bại!')),
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,

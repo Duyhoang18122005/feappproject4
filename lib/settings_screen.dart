@@ -5,6 +5,7 @@ import 'api_service.dart';
 import 'utils/notification_helper.dart';
 import 'update_profile_screen.dart';
 import 'update_player_screen.dart';
+import 'policy_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -246,7 +247,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const SizedBox(height: 8),
                     _SettingRow(icon: Icons.lock, label: "Khóa bảo vệ", color: Colors.purple),
                     const SizedBox(height: 8),
-                    _SettingRow(icon: Icons.policy, label: "Chính sách", color: Colors.red),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PolicyScreen()),
+                        );
+                      },
+                      child: _SettingRow(icon: Icons.policy, label: "Chính sách", color: Colors.red),
+                    ),
                     const SizedBox(height: 24),
                   ],
                 ),

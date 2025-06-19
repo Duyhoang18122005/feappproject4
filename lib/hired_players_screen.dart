@@ -45,7 +45,20 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Thông báo')),
+      appBar: AppBar(title: const Text('Thông báo'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete_sweep, color: Colors.red),
+            tooltip: 'Xóa tất cả',
+            onPressed: () async {
+              for (final n in notifications) {
+                await ApiService.deleteNotification(n['id']);
+              }
+              fetchAllNotifications();
+            },
+          ),
+        ],
+      ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : notifications.isEmpty
@@ -60,7 +73,20 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         leading: Icon(_iconForType(item['type']), color: Colors.deepOrange),
                         title: Text(item['title'] ?? ''),
                         subtitle: Text(item['message'] ?? ''),
-                        trailing: Text(item['createdAt'] != null ? item['createdAt'].toString().substring(0, 16).replaceAll('T', ' ') : ''),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(item['createdAt'] != null ? item['createdAt'].toString().substring(0, 16).replaceAll('T', ' ') : ''),
+                            IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              tooltip: 'Xóa thông báo',
+                              onPressed: () async {
+                                await ApiService.deleteNotification(item['id']);
+                                fetchAllNotifications();
+                              },
+                            ),
+                          ],
+                        ),
                         onTap: () async {
                           // Chỉ xử lý nếu là thông báo thuê mới và có orderId
                           if (item['type'] == 'rent' && item['orderId'] != null) {

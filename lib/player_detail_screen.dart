@@ -172,7 +172,6 @@ class _PlayerDetailScreenState extends State<PlayerDetailScreen> {
       backgroundColor: const Color(0xFFF7F7F9),
       appBar: AppBar(
         title: Text('Chi tiết ${player['username'] ?? ''}'),
-        backgroundColor: Colors.deepOrange,
         elevation: 0,
       ),
       body: SingleChildScrollView(
